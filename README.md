@@ -1,52 +1,57 @@
-# think-queue-rabbitmq for ThinkPHP5.1
+# 快速接入tp5.0的项目
 
-TP5 队列没有 RabbitMQ 驱动十分不便，借鉴了 Laravel 的 RabbitMQ 驱动包 [vyuldashev/laravel-queue-rabbitmq](https://github.com/vyuldashev/laravel-queue-rabbitmq)，为 TP 增加 RabbitMQ 驱动
-
-## 安装
-
-> composer require jayazhao/think-queue-rabbitmq
+安装依赖 `"topthink/think-queue": "1.1.6",`和`"enqueue/amqp-lib": "0.9.8"`
+下载该项目的文件放到对应的vendor/topthink/think-queue/src/queue位置
 
 ## 配置
 
-> 本驱动包基于 `think-queue`，配置文件位于 `config/queue.php`
+> 配置文件位于 `application/extra/queue.php`,消费类`Job1`使用不变
+
+推送`queue("Job1", ["name"=> "张三"]);`
 
 ### 驱动配置
 
-```
-
+```php
+if (IS_CLI) {
+    include "./vendor/topthink/think-queue/src/queue/job/RabbitMQ.php";
+    include "./vendor/topthink/think-queue/src/queue/connector/Rabbit.php";
+} else {
+    include "../vendor/topthink/think-queue/src/queue/connector/Rabbit.php";
+    include "../vendor/topthink/think-queue/src/queue/job/RabbitMQ.php";
+}
 return [
-    'connector' => 'jayazhao\\queue\\connector\\RabbitMQ',
+    'connector' => '\jayazhao\queue\connector\RabbitMQ',
 
-    'dsn' => env('RABBITMQ_DSN', null),
+    'dsn' => '',
 
-    'host' => env('RABBITMQ_HOST', '127.0.0.1'),
-    'port' => env('RABBITMQ_PORT', 5672),
+    'host' => "127.0.0.1",
+    'port' => 5672,
 
-    'vhost' => env('RABBITMQ_VHOST', '/'),
-    'login' => env('RABBITMQ_LOGIN', 'guest'),
-    'password' => env('RABBITMQ_PASSWORD', 'guest'),
+    'vhost' => '/',
+    'login' => "guest",
+    'password' => 'guest',
 
-    'queue' => env('RABBITMQ_QUEUE', 'default'),
+    'queue' => "queue_default",
 
     'options' => [
 
         'exchange' => [
 
-            'name' => env('RABBITMQ_EXCHANGE_NAME'),
+            'name' => 'queue_default',
 
             /*
             * Determine if exchange should be created if it does not exist.
             */
-            'declare' => env('RABBITMQ_EXCHANGE_DECLARE', true),
+            'declare' => true,
 
             /*
             * Read more about possible values at https://www.rabbitmq.com/tutorials/amqp-concepts.html
             */
-            'type' => env('RABBITMQ_EXCHANGE_TYPE', \Interop\Amqp\AmqpTopic::TYPE_DIRECT),
-            'passive' => env('RABBITMQ_EXCHANGE_PASSIVE', false),
-            'durable' => env('RABBITMQ_EXCHANGE_DURABLE', true),
-            'auto_delete' => env('RABBITMQ_EXCHANGE_AUTODELETE', false),
-            'arguments' => env('RABBITMQ_EXCHANGE_ARGUMENTS'),
+            'type' => \Interop\Amqp\AmqpTopic::TYPE_DIRECT,
+            'passive' => false,
+            'durable' => true,
+            'auto_delete' => false,
+            'arguments' => null,
         ],
 
         'queue' => [
@@ -54,43 +59,28 @@ return [
             /*
             * Determine if queue should be created if it does not exist.
             */
-            'declare' => env('RABBITMQ_QUEUE_DECLARE', true),
+            'declare' => true,
 
             /*
             * Determine if queue should be binded to the exchange created.
             */
-            'bind' => env('RABBITMQ_QUEUE_DECLARE_BIND', true),
+            'bind' => true,
 
             /*
             * Read more about possible values at https://www.rabbitmq.com/tutorials/amqp-concepts.html
             */
-            'passive' => env('RABBITMQ_QUEUE_PASSIVE', false),
-            'durable' => env('RABBITMQ_QUEUE_DURABLE', true),
-            'exclusive' => env('RABBITMQ_QUEUE_EXCLUSIVE', false),
-            'auto_delete' => env('RABBITMQ_QUEUE_AUTODELETE', false),
-            'arguments' => env('RABBITMQ_QUEUE_ARGUMENTS'),
+            'passive' => false,
+            'durable' => true,
+            'exclusive' => false,
+            'auto_delete' => false,
+            'arguments' => null,
         ],
     ],
 
-    /*
-     * Determine the number of seconds to sleep if there's an error communicating with rabbitmq
-     * If set to false, it'll throw an exception rather than doing the sleep for X seconds.
-     */
-    'sleep_on_error' => env('RABBITMQ_ERROR_SLEEP', 5),
 
-    /*
-     * Optional SSL params if an SSL connection is used
-     */
-    'ssl_params' => [
-        'ssl_on' => env('RABBITMQ_SSL', false),
-        'cafile' => env('RABBITMQ_SSL_CAFILE', null),
-        'local_cert' => env('RABBITMQ_SSL_LOCALCERT', null),
-        'local_key' => env('RABBITMQ_SSL_LOCALKEY', null),
-        'verify_peer' => env('RABBITMQ_SSL_VERIFY_PEER', true),
-        'passphrase' => env('RABBITMQ_SSL_PASSPHRASE', null),
-    ],
-    
+
 ];
+
 ```
 
 ## 创建任务类
@@ -184,6 +174,8 @@ class Job2{
 > php think queue:listen
 
 > php think queue:work --daemon（不加--daemon为执行单个任务）
+
+> php think queue:work --queue queue_default --daemon
 
 两种，具体的可选参数可以输入命令加 --help 查看
 
