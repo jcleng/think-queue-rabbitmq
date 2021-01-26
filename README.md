@@ -14,10 +14,10 @@
 ```php
 if (IS_CLI) {
     include "./vendor/topthink/think-queue/src/queue/job/RabbitMQ.php";
-    include "./vendor/topthink/think-queue/src/queue/connector/Rabbit.php";
+    include "./vendor/topthink/think-queue/src/queue/connector/RabbitMQ.php";
 } else {
-    include "../vendor/topthink/think-queue/src/queue/connector/Rabbit.php";
     include "../vendor/topthink/think-queue/src/queue/job/RabbitMQ.php";
+    include "../vendor/topthink/think-queue/src/queue/connector/RabbitMQ.php";
 }
 return [
     'connector' => '\jayazhao\queue\connector\RabbitMQ',
