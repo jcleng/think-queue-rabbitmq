@@ -1,14 +1,14 @@
 <?php
 /**
- * @author jayazhao
+ * @author jcleng
  * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 
-namespace jayazhao\queue\job;
+namespace jcleng\queue\job;
 
 use think\helper\Str;
 use think\queue\Job;
-use jayazhao\queue\connector\RabbitMQ as RabbitMQQueue;
+use jcleng\queue\connector\RabbitMQ as RabbitMQQueue;
 use Interop\Amqp\AmqpConsumer;
 use Interop\Amqp\AmqpMessage;
 use Exception;

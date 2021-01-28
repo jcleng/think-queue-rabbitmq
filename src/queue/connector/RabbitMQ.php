@@ -1,10 +1,10 @@
 <?php
 /**
- * @author jayazhao
+ * @author jcleng
  * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 
-namespace jayazhao\queue\connector;
+namespace jcleng\queue\connector;
 
 use Enqueue\AmqpLib\AmqpConnectionFactory;
 use Enqueue\AmqpLib\AmqpContext;
@@ -14,10 +14,10 @@ use Interop\Amqp\AmqpMessage;
 use Interop\Amqp\AmqpQueue;
 use Interop\Amqp\AmqpTopic;
 use Interop\Amqp\Impl\AmqpBind;
-use think\facade\Log;
+use think\Log;
 use think\helper\Str;
 use think\queue\Connector;
-use jayazhao\queue\job\RabbitMQ as RabbitMQJob;
+use jcleng\queue\job\RabbitMQ as RabbitMQJob;
 
 class RabbitMQ extends Connector
 {

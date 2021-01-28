@@ -1,26 +1,24 @@
 {
-  "name": "jayazhao/think-queue-rabbitmq",
-  "description": "为 ThinkPHP5.1 队列增加 RabbitMQ 驱动",
+  "name": "jcleng/think-queue-rabbitmq",
+  "description": "为 ThinkPH5.0 队列增加 RabbitMQ 驱动(forked https://github.com/jayazhao/think-queue-rabbitmq)",
   "type": "think-extend",
   "authors": [
     {
-      "name": "jayazhao",
-      "email": "jayazhao@foxmail.com"
+      "name": "jcleng",
+      "email": "j.c.leng@foxmail.com"
     }
   ],
   "license": "Apache-2.0",
   "autoload": {
     "psr-4": {
-      "jayazhao\\": "src"
+      "jcleng\\": "src"
     }
   },
   "require": {
-    "php": "^7.1.3",
-    "ext-json": "*",
     "topthink/think-helper": ">=1.0.4",
-    "topthink/think-installer": "^2.0",
-    "topthink/framework": "5.1.*",
-    "topthink/think-queue": "^2.0",
+    "topthink/think-installer": ">=1.0.10",
+    "topthink/framework": "~5.0.0",
+    "topthink/think-queue": "1.0.*",
     "enqueue/amqp-lib": "^0.9.8"
   }
 }
