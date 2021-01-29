@@ -1,6 +1,9 @@
 # 快速接入tp5.0的项目
 
 ```
+# 安装think-queue
+composer require "topthink/think-queue:1.1.*"
+# 安装rabbitmq支持
 composer require jcleng/think-queue-rabbitmq
 ```
 
