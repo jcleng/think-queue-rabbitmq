@@ -2,7 +2,7 @@
   "name": "jcleng/think-queue-rabbitmq",
   "description": "为 ThinkPH5.0 队列增加 RabbitMQ 驱动(forked https://github.com/jayazhao/think-queue-rabbitmq)",
   "type": "think-extend",
-  "version": "1.0.0beta1",
+  "version": "1.0.0",
   "authors": [
     {
       "name": "jcleng",
