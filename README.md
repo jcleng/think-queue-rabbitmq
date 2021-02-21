@@ -180,3 +180,18 @@ class Job2{
 两种，具体的可选参数可以输入命令加 --help 查看
 
 >可配合supervisor使用，保证进程常驻
+
+- supervisord.conf原文
+
+```conf
+[inet_http_server]
+port=127.0.0.1:9008
+
+[program:rabbitmq_worker]
+command=/Users/jcleng/.nix-profile/bin/php /Volumes/D/runbox/centos7/work/demo/think queue:listen --queue queue_default
+directory = /Volumes/D/runbox/centos7/work/demo
+user = jcleng
+process_name=%(program_name)s_%(process_num)02d ;多进程名称肯定不同，匹配多个
+numprocs=4;进程数
+
+```
