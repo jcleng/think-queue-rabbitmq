@@ -191,7 +191,7 @@ port=127.0.0.1:9008
 command=/Users/jcleng/.nix-profile/bin/php /Volumes/D/runbox/centos7/work/demo/think queue:listen --queue queue_default
 directory = /Volumes/D/runbox/centos7/work/demo
 user = jcleng
-process_name=%(program_name)s_%(process_num)02d ;多进程名称肯定不同，匹配多个
-numprocs=4;进程数
+process_name=%(program_name)s_%(process_num)02d
+numprocs=4
 
 ```
